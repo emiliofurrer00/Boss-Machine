@@ -49,7 +49,6 @@ export const updateIdeaThunk = idea => dispatch => {
   });
 }
 
-
 // Reducer
 
 const initial = [];
