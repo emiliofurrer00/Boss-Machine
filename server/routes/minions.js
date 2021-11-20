@@ -105,7 +105,12 @@ router.put('/:minionId/work/:workId', (req, res, next) => {
     const { workId } = req.params;
     const targetWork = getFromDatabaseById('work', workId);
     const targetMinion = getFromDatabaseById('minions', minionId);
-    if (targetWork !== -1 && targetMinion !== -1 && title && description && hours){
+    // Making sure the minionId provided relates to the given workId
+    const doesMinionMatchWork = targetWork.minionId === minionId;
+    if (!doesMinionMatchWork) {
+        res.status(400).send();
+    }
+    else if (targetWork !== -1 && targetMinion !== -1 && title && description && hours){
         const updatedWork = {
             id: workId,
             title,
@@ -118,6 +123,12 @@ router.put('/:minionId/work/:workId', (req, res, next) => {
     } else {
         res.send(404).send();
     }
+});
+
+router.delete('/:minionId/work/:workId', (req, res, next) => {
+    const { workId } = req.params;
+    deleteFromDatabasebyId('work', workId);
+    res.status(204).send();
 })
 
 

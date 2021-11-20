@@ -19,7 +19,7 @@ router.get('/', (req, res, next) => {
 router.param('ideaId', (req, res, next, id) => {
     const ideaId = id;
     const targetIdea = getFromDatabaseById('ideas', ideaId);
-    if (targetIdea != -1 && !Number.isNaN(ideaId)) {
+    if (targetIdea !== -1 && !Number.isNaN(ideaId)) {
         req.body.targetIdea = targetIdea;
         req.body.ideaId = ideaId;
         next();
